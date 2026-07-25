@@ -2,6 +2,8 @@
 > A privacy-preserving zero-knowledge loyalty tier verification & member proof dApp built on the Midnight Network using Compact smart contracts.
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-private--loyalty--membership-181717?style=flat-square&logo=github)](https://github.com/techyguy7863/private-loyalty-membership)
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-private--loyalty--membership.vercel.app-000000?style=flat-square&logo=vercel)](https://private-loyalty-membership.vercel.app/)
+[![YouTube Demo](https://img.shields.io/badge/YouTube-Demo_Video-FF0000?style=flat-square&logo=youtube)](https://youtu.be/41hDgBExJsY)
 [![CI/CD Pipeline](https://github.com/techyguy7863/private-loyalty-membership/actions/workflows/ci.yml/badge.svg)](https://github.com/techyguy7863/private-loyalty-membership/actions/workflows/ci.yml)
 [![Midnight Network](https://img.shields.io/badge/Network-Midnight_Preprod-8b5cf6?style=flat-square)](https://explorer.preprod.midnight.network)
 [![Compact Language](https://img.shields.io/badge/Compact-v0.23-06b6d4?style=flat-square)](https://midnight.network)
@@ -21,6 +23,8 @@
 ## 🏗️ Repository & Deployment
 
 - 📦 **GitHub Repository**: [https://github.com/techyguy7863/private-loyalty-membership](https://github.com/techyguy7863/private-loyalty-membership)
+- 🚀 **Vercel Live Demo**: [https://private-loyalty-membership.vercel.app/](https://private-loyalty-membership.vercel.app/)
+- 🎥 **YouTube Demo Video**: [https://youtu.be/41hDgBExJsY](https://youtu.be/41hDgBExJsY)
 - ⚙️ **CI/CD Workflow**: [.github/workflows/ci.yml](.github/workflows/ci.yml)
 - 🌐 **Midnight Explorer**: [https://explorer.preprod.midnight.network](https://explorer.preprod.midnight.network)
 - 📡 **Network**: Midnight Preprod Testnet
@@ -102,7 +106,7 @@ export circuit claimReward(expectedProgramId: Bytes<32>): Bytes<32> {
 }
 
 export circuit resetProgram(newProgramId: Bytes<32>): Bytes<32> {
-  programId = newProgramId;
+  programId = disclose(newProgramId);
   activeSession.increment(1);
   return programId;
 }
@@ -147,5 +151,7 @@ npx tsx src/integration/deploy.ts
 ### Level 3 Checklist
 - [x] **Interactive Web UI**: Modern Emerald Mint glassmorphic UI built with HTML5, CSS3, & TypeScript.
 - [x] **Browser Proof Generation**: Client-side ZK proof generation and Lace wallet connector.
-- [x] **On-Chain Preprod Deployment**: Pre-configured for deployment to Midnight Preprod Testnet.
+- [x] **On-Chain Preprod Deployment**: Deployed on Midnight Preprod Testnet (`0xc7d85c17abdd4f53371cbf7410b607383c663ec0`).
+- [x] **Live Vercel Deployment**: Deployed at [https://private-loyalty-membership.vercel.app/](https://private-loyalty-membership.vercel.app/).
+- [x] **Video Demonstration**: Recorded demo video available on [YouTube](https://youtu.be/41hDgBExJsY).
 - [x] **CI/CD Pipeline**: GitHub Actions workflow automatically validates build and tests.
