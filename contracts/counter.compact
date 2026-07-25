@@ -31,7 +31,7 @@ export circuit claimReward(expectedProgramId: Bytes<32>): Bytes<32> {
 }
 
 export circuit resetProgram(newProgramId: Bytes<32>): Bytes<32> {
-  programId = newProgramId;
+  programId = disclose(newProgramId);
   activeSession.increment(1);
   return programId;
 }
