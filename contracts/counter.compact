@@ -1,0 +1,41 @@
+pragma language_version 0.23;
+import CompactStandardLibrary;
+
+export ledger memberCount: Counter;
+export ledger programId: Bytes<32>;
+export ledger lastRewardCommitment: Bytes<32>;
+export ledger activeSession: Counter;
+
+witness memberSecretKey(): Bytes<32>;
+witness loyaltyProofNonce(): Bytes<32>;
+witness membershipRecordHash(): Bytes<32>;
+
+export circuit claimReward(expectedProgramId: Bytes<32>): Bytes<32> {
+  assert(programId == expectedProgramId, "Invalid loyalty program ID provided");
+
+  const memberKey = memberSecretKey();
+  const nonce = loyaltyProofNonce();
+  const recordHash = membershipRecordHash();
+
+  const rewardCommitment = persistentHash<Vector<4, Bytes<32>>>([
+    pad(32, "plm:loyalty:membership:v1"),
+    memberKey,
+    nonce,
+    recordHash
+  ]);
+
+  memberCount.increment(1);
+  const disclosedCommitment = disclose(rewardCommitment);
+  lastRewardCommitment = disclosedCommitment;
+  return disclosedCommitment;
+}
+
+export circuit resetProgram(newProgramId: Bytes<32>): Bytes<32> {
+  programId = newProgramId;
+  activeSession.increment(1);
+  return programId;
+}
+
+export circuit incrementSession(): [] {
+  activeSession.increment(1);
+}
