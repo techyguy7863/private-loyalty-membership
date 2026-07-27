@@ -43,7 +43,7 @@
 ![ZK Proof Generation & Activity Log](photos/image-1.png)
 
 ### On-Chain Ledger & Admin Panel
-![On-Chain Ledger & Admin Panel](photos/screenshot.png)
+![On-Chain Ledger & Admin Panel](photos/Screenshot.png)
 
 ---
 
