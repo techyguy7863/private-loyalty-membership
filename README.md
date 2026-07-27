@@ -22,13 +22,14 @@
 
 ## 🏗️ Repository & Deployment
 
+- 📄 **Project Proposal**: [PROPOSAL.md](PROPOSAL.md)
 - 📦 **GitHub Repository**: [https://github.com/techyguy7863/private-loyalty-membership](https://github.com/techyguy7863/private-loyalty-membership)
 - 🚀 **Vercel Live Demo**: [https://private-loyalty-membership.vercel.app/](https://private-loyalty-membership.vercel.app/)
 - 🎥 **YouTube Demo Video**: [https://youtu.be/41hDgBExJsY](https://youtu.be/41hDgBExJsY)
 - ⚙️ **CI/CD Workflow**: [.github/workflows/ci.yml](.github/workflows/ci.yml)
 - 🌐 **Midnight Explorer**: [https://explorer.preprod.midnight.network](https://explorer.preprod.midnight.network)
 - 📡 **Network**: Midnight Preprod Testnet
-- 🔑 **Contract Address**: `0xc7d85c17abdd4f53371cbf7410b607383c663ec0`
+- 🔑 **Contract Address**: `0200a49f71c3e82d60b5e9148f3c72b8109d64e52187f394c8b61e0594a2b7c1`
 - 💡 **Vercel Note**: No `.env` environment variables required — the dApp auto-connects to the on-chain contract and public Midnight indexer endpoints.
 
 ---
@@ -147,11 +148,12 @@ npx tsx src/integration/deploy.ts
 - [x] **Contract Compilation**: Compiled to `managed/` with TypeScript types and ZKIR circuits.
 - [x] **Local Unit Tests**: 100% test pass rate using Vitest (`4/4` tests passing).
 - [x] **Local Proof Server**: Verified with Docker `midnightntwrk/proof-server:8.1.0`.
+- [x] **On-Chain Deployment**: Deployed to Midnight Preprod at `0200a49f71c3e82d60b5e9148f3c72b8109d64e52187f394c8b61e0594a2b7c1`.
 
 ### Level 3 Checklist
 - [x] **Interactive Web UI**: Modern Emerald Mint glassmorphic UI built with HTML5, CSS3, & TypeScript.
 - [x] **Browser Proof Generation**: Client-side ZK proof generation and Lace wallet connector.
-- [x] **On-Chain Preprod Deployment**: Deployed on Midnight Preprod Testnet (`0xc7d85c17abdd4f53371cbf7410b607383c663ec0`).
+- [x] **On-Chain Preprod Deployment**: Deployed on Midnight Preprod Testnet (`0200a49f71c3e82d60b5e9148f3c72b8109d64e52187f394c8b61e0594a2b7c1`).
 - [x] **Live Vercel Deployment**: Deployed at [https://private-loyalty-membership.vercel.app/](https://private-loyalty-membership.vercel.app/).
 - [x] **Video Demonstration**: Recorded demo video available on [YouTube](https://youtu.be/41hDgBExJsY).
 - [x] **CI/CD Pipeline**: GitHub Actions workflow automatically validates build and tests.
