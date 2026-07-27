@@ -37,13 +37,13 @@
 ## 📸 Platform Screenshots
 
 ### Private Loyalty Membership — Main Application & Dashboard
-![Private Loyalty Membership Main Application](photos/screenshot.png)
+![Private Loyalty Membership Main Application](photos/image.png)
 
 ### ZK Proof Generation & Activity Log
 ![ZK Proof Generation & Activity Log](photos/image-1.png)
 
 ### On-Chain Ledger & Admin Panel
-![On-Chain Ledger & Admin Panel](photos/image.png)
+![On-Chain Ledger & Admin Panel](photos/screenshot.png)
 
 ---
 
