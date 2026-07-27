@@ -79,14 +79,14 @@ export class Contract {
         if (!(typeof(contextOrig_0) === 'object' && contextOrig_0.currentQueryContext != undefined)) {
           __compactRuntime.typeError('claimReward',
                                      'argument 1 (as invoked from Typescript)',
-                                     'counter.compact line 28 char 1',
+                                     'counter.compact line 13 char 1',
                                      'CircuitContext',
                                      contextOrig_0)
         }
         if (!(expectedProgramId_0.buffer instanceof ArrayBuffer && expectedProgramId_0.BYTES_PER_ELEMENT === 1 && expectedProgramId_0.length === 32)) {
           __compactRuntime.typeError('claimReward',
                                      'argument 1 (argument 2 as invoked from Typescript)',
-                                     'counter.compact line 28 char 1',
+                                     'counter.compact line 13 char 1',
                                      'Bytes<32>',
                                      expectedProgramId_0)
         }
@@ -101,8 +101,8 @@ export class Contract {
           privateTranscriptOutputs: []
         };
         const result_0 = this._claimReward_0(context,
-                                                     partialProofData,
-                                                     expectedProgramId_0);
+                                             partialProofData,
+                                             expectedProgramId_0);
         partialProofData.output = { value: _descriptor_1.toValue(result_0), alignment: _descriptor_1.alignment() };
         return { result: result_0, context: context, proofData: partialProofData, gasCost: context.gasCost };
       },
@@ -115,14 +115,14 @@ export class Contract {
         if (!(typeof(contextOrig_0) === 'object' && contextOrig_0.currentQueryContext != undefined)) {
           __compactRuntime.typeError('resetProgram',
                                      'argument 1 (as invoked from Typescript)',
-                                     'counter.compact line 48 char 1',
+                                     'counter.compact line 33 char 1',
                                      'CircuitContext',
                                      contextOrig_0)
         }
         if (!(newProgramId_0.buffer instanceof ArrayBuffer && newProgramId_0.BYTES_PER_ELEMENT === 1 && newProgramId_0.length === 32)) {
           __compactRuntime.typeError('resetProgram',
                                      'argument 1 (argument 2 as invoked from Typescript)',
-                                     'counter.compact line 48 char 1',
+                                     'counter.compact line 33 char 1',
                                      'Bytes<32>',
                                      newProgramId_0)
         }
@@ -137,9 +137,9 @@ export class Contract {
           privateTranscriptOutputs: []
         };
         const result_0 = this._resetProgram_0(context,
-                                                  partialProofData,
-                                                  newProgramId_0);
-        partialProofData.output = { value: [], alignment: [] };
+                                              partialProofData,
+                                              newProgramId_0);
+        partialProofData.output = { value: _descriptor_1.toValue(result_0), alignment: _descriptor_1.alignment() };
         return { result: result_0, context: context, proofData: partialProofData, gasCost: context.gasCost };
       },
       incrementSession: (...args_1) => {
@@ -150,7 +150,7 @@ export class Contract {
         if (!(typeof(contextOrig_0) === 'object' && contextOrig_0.currentQueryContext != undefined)) {
           __compactRuntime.typeError('incrementSession',
                                      'argument 1 (as invoked from Typescript)',
-                                     'counter.compact line 52 char 1',
+                                     'counter.compact line 39 char 1',
                                      'CircuitContext',
                                      contextOrig_0)
         }
@@ -178,11 +178,10 @@ export class Contract {
     };
   }
   initialState(...args_0) {
-    if (args_0.length !== 2) {
-      throw new __compactRuntime.CompactError(`Contract state constructor: expected 2 arguments (as invoked from Typescript), received ${args_0.length}`);
+    if (args_0.length !== 1) {
+      throw new __compactRuntime.CompactError(`Contract state constructor: expected 1 argument (as invoked from Typescript), received ${args_0.length}`);
     }
     const constructorContext_0 = args_0[0];
-    const initialSkillId_0 = args_0[1];
     if (typeof(constructorContext_0) !== 'object') {
       throw new __compactRuntime.CompactError(`Contract state constructor: expected 'constructorContext' in argument 1 (as invoked from Typescript) to be an object`);
     }
@@ -194,13 +193,6 @@ export class Contract {
     }
     if (typeof(constructorContext_0.initialZswapLocalState) !== 'object') {
       throw new __compactRuntime.CompactError(`Contract state constructor: expected 'initialZswapLocalState' in argument 1 (as invoked from Typescript) to be an object`);
-    }
-    if (!(initialSkillId_0.buffer instanceof ArrayBuffer && initialSkillId_0.BYTES_PER_ELEMENT === 1 && initialSkillId_0.length === 32)) {
-      __compactRuntime.typeError('Contract state constructor',
-                                 'argument 1 (argument 2 as invoked from Typescript)',
-                                 'counter.compact line 18 char 1',
-                                 'Bytes<32>',
-                                 initialSkillId_0)
     }
     const state_0 = new __compactRuntime.ContractState();
     let stateValue_0 = __compactRuntime.StateValue.newArray();
@@ -259,48 +251,6 @@ export class Contract {
                                                  value: __compactRuntime.StateValue.newCell({ value: _descriptor_3.toValue(0n),
                                                                                               alignment: _descriptor_3.alignment() }).encode() } },
                                        { ins: { cached: false, n: 1 } }]);
-    __compactRuntime.queryLedgerState(context,
-                                      partialProofData,
-                                      [
-                                       { push: { storage: false,
-                                                 value: __compactRuntime.StateValue.newCell({ value: _descriptor_8.toValue(1n),
-                                                                                              alignment: _descriptor_8.alignment() }).encode() } },
-                                       { push: { storage: true,
-                                                 value: __compactRuntime.StateValue.newCell({ value: _descriptor_1.toValue(initialSkillId_0),
-                                                                                              alignment: _descriptor_1.alignment() }).encode() } },
-                                       { ins: { cached: false, n: 1 } }]);
-    const tmp_0 = 1n;
-    __compactRuntime.queryLedgerState(context,
-                                      partialProofData,
-                                      [
-                                       { idx: { cached: false,
-                                                pushPath: true,
-                                                path: [
-                                                       { tag: 'value',
-                                                         value: { value: _descriptor_8.toValue(0n),
-                                                                  alignment: _descriptor_8.alignment() } }] } },
-                                       { addi: { immediate: parseInt(__compactRuntime.valueToBigInt(
-                                                              { value: _descriptor_0.toValue(tmp_0),
-                                                                alignment: _descriptor_0.alignment() }
-                                                                .value
-                                                            )) } },
-                                       { ins: { cached: true, n: 1 } }]);
-    const tmp_1 = 1n;
-    __compactRuntime.queryLedgerState(context,
-                                      partialProofData,
-                                      [
-                                       { idx: { cached: false,
-                                                pushPath: true,
-                                                path: [
-                                                       { tag: 'value',
-                                                         value: { value: _descriptor_8.toValue(3n),
-                                                                  alignment: _descriptor_8.alignment() } }] } },
-                                       { addi: { immediate: parseInt(__compactRuntime.valueToBigInt(
-                                                              { value: _descriptor_0.toValue(tmp_1),
-                                                                alignment: _descriptor_0.alignment() }
-                                                                .value
-                                                            )) } },
-                                       { ins: { cached: true, n: 1 } }]);
     state_0.data = new __compactRuntime.ChargedState(context.currentQueryContext.state.state);
     return {
       currentContractState: state_0,
@@ -319,7 +269,7 @@ export class Contract {
     if (!(result_0.buffer instanceof ArrayBuffer && result_0.BYTES_PER_ELEMENT === 1 && result_0.length === 32)) {
       __compactRuntime.typeError('memberSecretKey',
                                  'return value',
-                                 'counter.compact line 24 char 1',
+                                 'counter.compact line 9 char 1',
                                  'Bytes<32>',
                                  result_0)
     }
@@ -336,7 +286,7 @@ export class Contract {
     if (!(result_0.buffer instanceof ArrayBuffer && result_0.BYTES_PER_ELEMENT === 1 && result_0.length === 32)) {
       __compactRuntime.typeError('loyaltyProofNonce',
                                  'return value',
-                                 'counter.compact line 25 char 1',
+                                 'counter.compact line 10 char 1',
                                  'Bytes<32>',
                                  result_0)
     }
@@ -353,7 +303,7 @@ export class Contract {
     if (!(result_0.buffer instanceof ArrayBuffer && result_0.BYTES_PER_ELEMENT === 1 && result_0.length === 32)) {
       __compactRuntime.typeError('membershipRecordHash',
                                  'return value',
-                                 'counter.compact line 26 char 1',
+                                 'counter.compact line 11 char 1',
                                  'Bytes<32>',
                                  result_0)
     }
@@ -377,15 +327,14 @@ export class Contract {
                                                                                                      { popeq: { cached: false,
                                                                                                                 result: undefined } }]).value),
                                           expectedProgramId_0),
-                            'Invalid scholarship program ID provided');
-    const applicantKey_0 = this._memberSecretKey_0(context, partialProofData);
+                            'Invalid loyalty program ID provided');
+    const memberKey_0 = this._memberSecretKey_0(context, partialProofData);
     const nonce_0 = this._loyaltyProofNonce_0(context, partialProofData);
-    const academicRecord_0 = this._membershipRecordHash_0(context,
-                                                        partialProofData);
-    const eligibilityCommitment_0 = this._persistentHash_0([new Uint8Array([99, 115, 101, 58, 115, 99, 104, 111, 108, 97, 114, 115, 104, 105, 112, 58, 101, 108, 105, 103, 105, 98, 105, 108, 105, 116, 121, 58, 118, 49, 0, 0]),
-                                                            applicantKey_0,
-                                                            nonce_0,
-                                                            academicRecord_0]);
+    const recordHash_0 = this._membershipRecordHash_0(context, partialProofData);
+    const rewardCommitment_0 = this._persistentHash_0([new Uint8Array([112, 108, 109, 58, 108, 111, 121, 97, 108, 116, 121, 58, 109, 101, 109, 98, 101, 114, 115, 104, 105, 112, 58, 118, 49, 0, 0, 0, 0, 0, 0, 0]),
+                                                       memberKey_0,
+                                                       nonce_0,
+                                                       recordHash_0]);
     const tmp_0 = 1n;
     __compactRuntime.queryLedgerState(context,
                                       partialProofData,
@@ -402,7 +351,7 @@ export class Contract {
                                                                 .value
                                                             )) } },
                                        { ins: { cached: true, n: 1 } }]);
-    const disclosedCommitment_0 = eligibilityCommitment_0;
+    const disclosedCommitment_0 = rewardCommitment_0;
     __compactRuntime.queryLedgerState(context,
                                       partialProofData,
                                       [
@@ -426,7 +375,34 @@ export class Contract {
                                                  value: __compactRuntime.StateValue.newCell({ value: _descriptor_1.toValue(newProgramId_0),
                                                                                               alignment: _descriptor_1.alignment() }).encode() } },
                                        { ins: { cached: false, n: 1 } }]);
-    return [];
+    const tmp_0 = 1n;
+    __compactRuntime.queryLedgerState(context,
+                                      partialProofData,
+                                      [
+                                       { idx: { cached: false,
+                                                pushPath: true,
+                                                path: [
+                                                       { tag: 'value',
+                                                         value: { value: _descriptor_8.toValue(3n),
+                                                                  alignment: _descriptor_8.alignment() } }] } },
+                                       { addi: { immediate: parseInt(__compactRuntime.valueToBigInt(
+                                                              { value: _descriptor_0.toValue(tmp_0),
+                                                                alignment: _descriptor_0.alignment() }
+                                                                .value
+                                                            )) } },
+                                       { ins: { cached: true, n: 1 } }]);
+    return _descriptor_1.fromValue(__compactRuntime.queryLedgerState(context,
+                                                                     partialProofData,
+                                                                     [
+                                                                      { dup: { n: 0 } },
+                                                                      { idx: { cached: false,
+                                                                               pushPath: false,
+                                                                               path: [
+                                                                                      { tag: 'value',
+                                                                                        value: { value: _descriptor_8.toValue(1n),
+                                                                                                 alignment: _descriptor_8.alignment() } }] } },
+                                                                      { popeq: { cached: false,
+                                                                                 result: undefined } }]).value);
   }
   _incrementSession_0(context, partialProofData) {
     const tmp_0 = 1n;

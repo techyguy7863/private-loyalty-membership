@@ -36,14 +36,14 @@
 
 ## 📸 Platform Screenshots
 
-### Private Loyalty Membership — Landing Page
-![Landing Page](photos/image.png)
+### Private Loyalty Membership — Main Application & Dashboard
+![Private Loyalty Membership Main Application](photos/screenshot.png)
 
 ### ZK Proof Generation & Activity Log
-![ZK Proof Generation](photos/image-1.png)
+![ZK Proof Generation & Activity Log](photos/image-1.png)
 
-### Multi-Page Dashboard & Chain Explorer
-![Multi-Page Dashboard](photos/screenshot.png)
+### On-Chain Ledger & Admin Panel
+![On-Chain Ledger & Admin Panel](photos/image.png)
 
 ---
 
