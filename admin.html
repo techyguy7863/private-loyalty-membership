@@ -73,10 +73,20 @@
               <span style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.35rem; display: block;">Resets the reward redemption counter and updates the active loyalty program on-chain.</span>
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1rem;">
-              ⚙️ Update On-Chain Program ID & Increment Session
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1rem; margin-bottom: 1.5rem;">
+              ⚙️ Update On-Chain Program ID (`resetProgram` Circuit)
             </button>
           </form>
+
+          <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; margin-top: 1.5rem;">
+            <label style="display: block; color: var(--text-primary); font-weight: 600; margin-bottom: 0.5rem;">Increment Active Session Counter (`incrementSession` Circuit)</label>
+            <button id="incrementSessionBtn" class="btn btn-secondary" style="width: 100%; padding: 0.85rem;">Increment Loyalty Session Counter</button>
+          </div>
+
+          <div id="adminLogArea" style="margin-top: 1.5rem; display: none;">
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">On-Chain Execution Result:</div>
+            <div id="adminLogBox" style="background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 10px; padding: 1rem; font-family: var(--font-mono); font-size: 0.85rem; color: #34d399; line-height: 1.8; word-break: break-all;"></div>
+          </div>
         </div>
 
       </div>
