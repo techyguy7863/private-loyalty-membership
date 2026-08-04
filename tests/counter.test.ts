@@ -11,7 +11,7 @@ describe('Private Loyalty Membership (PLM) Smart Contract Test Suite', () => {
   it('should initialize PrivateLoyaltyMembershipClient with default network config', () => {
     expect(CONTRACT_ADDRESS).toBeDefined();
     expect(CONTRACT_ADDRESS.startsWith('0200')).toBe(true);
-    expect(NETWORK_CONFIG.networkId).toBe('preprod');
+    expect(NETWORK_CONFIG.networkId).toBe('preview');
   });
 
   it('should generate valid private witnesses for memberSecretKey, loyaltyProofNonce, and membershipRecordHash', () => {

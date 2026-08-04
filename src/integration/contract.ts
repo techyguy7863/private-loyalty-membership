@@ -4,23 +4,23 @@ import { Contract, ledger, type Ledger, type Witnesses } from '../../managed/con
  * ============================================================================
  * PRIVATE LOYALTY MEMBERSHIP (PLM) INTEGRATION CONFIG - BROWSER WALLET
  * ============================================================================
- * Connected smart contract address on Midnight Preprod Testnet.
+ * Connected smart contract address on Midnight Preview Testnet.
  */
 export const CONTRACT_ADDRESS = "02007a8c39e1f2b703d8201f7c26d5e4a310b820123456789abcdef012345678";
 
 export const getProofServerUrl = (): string => {
   if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-    return "https://indexer.preprod.midnight.network";
+    return "https://indexer.preview.midnight.network/api/v4/graphql";
   }
   return "http://localhost:6300";
 };
 
 export const NETWORK_CONFIG = {
-  networkId: "preprod",
-  indexerUrl: "https://indexer.preprod.midnight.network",
+  networkId: "preview",
+  indexerUrl: "https://indexer.preview.midnight.network/api/v4/graphql",
   proofServerUrl: getProofServerUrl(),
-  nodeUrl: "https://rpc.preprod.midnight.network",
-  faucetUrl: "https://faucet.preprod.midnight.network"
+  nodeUrl: "https://rpc.preview.midnight.network",
+  faucetUrl: "https://faucet.preview.midnight.network"
 };
 
 export interface MemberPrivateState {
@@ -152,7 +152,7 @@ export class PrivateLoyaltyMembershipClient {
 
       if (typeof provider.connect === 'function') {
         try {
-          connectedApi = await provider.connect('preprod');
+          connectedApi = await provider.connect('preview');
         } catch (e) {
           connectedApi = await provider.connect();
         }
@@ -196,7 +196,7 @@ export class PrivateLoyaltyMembershipClient {
 
       if (!address || typeof address !== 'string') {
         const walletId = provider.rdns || provider.name || "lace_midnight";
-        address = `mn_preprod1_${walletId.replace(/[^a-z0-9]/gi, '')}_${Date.now().toString(36)}`;
+        address = `mn_preview1_${walletId.replace(/[^a-z0-9]/gi, '')}_${Date.now().toString(36)}`;
       }
 
       this.walletConnected = true;
