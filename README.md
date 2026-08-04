@@ -27,10 +27,10 @@
 - 🚀 **Vercel Live Demo**: [https://private-loyalty-membership.vercel.app/](https://private-loyalty-membership.vercel.app/)
 - 🎥 **YouTube Demo Video**: [https://youtu.be/41hDgBExJsY](https://youtu.be/41hDgBExJsY)
 - ⚙️ **CI/CD Workflow**: [.github/workflows/ci.yml](.github/workflows/ci.yml)
-- 🌐 **Midnight Explorer**: [https://explorer.preview.midnight.network](https://explorer.preview.midnight.network)
+- 🌐 **Midnight Explorer**: [https://preview.midnightexplorer.com/contracts/0xb90200ad492044f33487a095966ab177dfef9bc957e3d185bae8d2126555006e](https://preview.midnightexplorer.com/contracts/0xb90200ad492044f33487a095966ab177dfef9bc957e3d185bae8d2126555006e)
 - 📡 **Network**: Midnight Preview Testnet
-- 🔑 **Contract Address**: `0200a49f71c3e82d60b5e9148f3c72b8109d64e52187f394c8b61e0594a2b7c1` ✅ **CONFIRMED**
-- 🔍 **Explorer Search Address**: `b90200a49f71c3e82d60b5e9148f3c72b8109d64e52187f394c8b61e0594a2b7c1`
+- 🔑 **Contract Address**: `0200ad492044f33487a095966ab177dfef9bc957e3d185bae8d2126555006e` ✅ **CONFIRMED**
+- 🔍 **Explorer Search Address**: `b90200ad492044f33487a095966ab177dfef9bc957e3d185bae8d2126555006e`
 - 💡 **Vercel Note**: No `.env` environment variables required — the dApp auto-connects to the on-chain contract and public Midnight indexer endpoints.
 
 **Verified On-Chain Transactions (Midnight Preview Block Explorer):**
