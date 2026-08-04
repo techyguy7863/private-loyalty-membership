@@ -11,7 +11,8 @@
     "build": "tsc --noEmit && vite build",
     "deploy": "node --loader ts-node/esm src/integration/deploy.ts",
     "deploy:preview": "npx tsx src/integration/deploy-preview.ts",
-    "deploy:seed": "npx tsx src/integration/deploy-seed.ts"
+    "deploy:seed": "npx tsx src/integration/deploy-seed.ts",
+    "deploy:live": "npx tsx src/integration/deploy-live.ts"
   },
   "dependencies": {
     "@midnight-ntwrk/compact-runtime": "0.16.0",
