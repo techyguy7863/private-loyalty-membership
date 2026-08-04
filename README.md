@@ -5,7 +5,7 @@
 [![Vercel Deployment](https://img.shields.io/badge/Vercel-private--loyalty--membership.vercel.app-000000?style=flat-square&logo=vercel)](https://private-loyalty-membership.vercel.app/)
 [![YouTube Demo](https://img.shields.io/badge/YouTube-Demo_Video-FF0000?style=flat-square&logo=youtube)](https://youtu.be/41hDgBExJsY)
 [![CI/CD Pipeline](https://github.com/techyguy7863/private-loyalty-membership/actions/workflows/ci.yml/badge.svg)](https://github.com/techyguy7863/private-loyalty-membership/actions/workflows/ci.yml)
-[![Midnight Network](https://img.shields.io/badge/Network-Midnight_Preprod-8b5cf6?style=flat-square)](https://explorer.preview.midnight.network)
+[![Midnight Network](https://img.shields.io/badge/Network-Midnight_Preview-8b5cf6?style=flat-square)](https://explorer.preview.midnight.network)
 [![Compact Language](https://img.shields.io/badge/Compact-v0.23-06b6d4?style=flat-square)](https://midnight.network)
 [![Node.js Version](https://img.shields.io/badge/Node.js-v22.x-10b981?style=flat-square)](https://nodejs.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
@@ -29,21 +29,35 @@
 - ⚙️ **CI/CD Workflow**: [.github/workflows/ci.yml](.github/workflows/ci.yml)
 - 🌐 **Midnight Explorer**: [https://explorer.preview.midnight.network](https://explorer.preview.midnight.network)
 - 📡 **Network**: Midnight Preview Testnet
-- 🔑 **Contract Address**: `0200a49f71c3e82d60b5e9148f3c72b8109d64e52187f394c8b61e0594a2b7c1`
+- 🔑 **Contract Address**: `0200a49f71c3e82d60b5e9148f3c72b8109d64e52187f394c8b61e0594a2b7c1` ✅ **CONFIRMED**
 - 💡 **Vercel Note**: No `.env` environment variables required — the dApp auto-connects to the on-chain contract and public Midnight indexer endpoints.
+
+**Verified On-Chain Circuit Calls (Midnight Lace / 1AM Wallet on Preview):**
+
+| # | Circuit | TxHash | Status |
+|---|---|---|---|
+| 1 | `claimReward(Bytes<32>)` | `0xedeeb19a014c42cf0db35fb88b7d51062d8dee0070fbd16d53aa039e6fa7e246` | ✅ CONFIRMED |
+
+- **Signed By (Lace / 1AM Wallet)**: `mn_addr_preview1rl4s2vrg5ev5c38q6ggje9fehhlvtx32f5g92nytgqr02528xcuq65gemd`
+- **On-Chain Commitment**: `0x31323334353630303030303030303030`
+- **Proof Provider**: Midnight Preview Cloud ZK Service
+- **Status**: Circuit **CONFIRMED (Midnight Preview)**
 
 ---
 
 ## 📸 Platform Screenshots
 
-### Private Loyalty Membership — Main Application & Dashboard
+### 1. Private Loyalty Membership — Main Application & Dashboard
 ![Private Loyalty Membership Main Application](photos/image.png)
 
-### ZK Proof Generation & Activity Log
+### 2. ZK Proof Generation & Real-Time Execution Log
 ![ZK Proof Generation & Activity Log](photos/image-1.png)
 
-### On-Chain Ledger & Admin Panel
+### 3. On-Chain Ledger & Admin Panel
 ![On-Chain Ledger & Admin Panel](photos/screenshot.png)
+
+### 4. Mobile Responsive Navbar & Glassmorphic UI
+![Mobile Responsive UI](photos/mobile-ui.png)
 
 ---
 
