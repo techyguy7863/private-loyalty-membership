@@ -35,11 +35,11 @@
 
 **Verified On-Chain Transactions (Midnight Preview Block Explorer):**
 
-| # | Type / Circuit | TxHash / Identifier | Block | Status |
+| # | Type / Circuit | TxHash / Identifier | Details | Status |
 |---|---|---|---|---|
-| 1 | **NIGHT Token Transfer** | `2879fe8b...73bfb595` | Wallet Sync | ✅ SUCCESS |
-| 2 | `claimReward(Bytes<32>)` | `f8147ef0...e47b` | Block 270,337 | ✅ SUCCESS |
-| 3 | `resetProgram(Bytes<32>)` | `d1456fa1...9a07` | Block 270,331 | ✅ SUCCESS |
+| 1 | **NIGHT Token Transfer** | `2879fe8b...73bfb595` | Received +5000 NIGHT Unshielded | ✅ SUCCESS |
+| 2 | `resetProgram(Bytes<32>)` | `0xc237dd4d40e8b883072a5f745552b14f598d6ba4cc7bd3b5dadd13279cc15e54` | Program `program_platinum_elite_2026` | ✅ **CONFIRMED** |
+| 3 | `claimReward(Bytes<32>)` | `0xedeeb19a014c42cf0db35fb88b7d51062d8dee0070fbd16d53aa039e6fa7e246` | ZK Loyalty Tier Proof | ✅ **CONFIRMED** |
 
 - **Signed By (1AM Wallet)**: `mn_addr_preview1y5jhwu6nc03adtpg90wec3mzrj6g3p27a5tsnxusdkr27318s5xsqq8q3z`
 - **Block Explorer**: [https://explorer.preview.midnight.network](https://explorer.preview.midnight.network)
