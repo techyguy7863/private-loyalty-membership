@@ -30,6 +30,7 @@
 - 🌐 **Midnight Explorer**: [https://explorer.preview.midnight.network](https://explorer.preview.midnight.network)
 - 📡 **Network**: Midnight Preview Testnet
 - 🔑 **Contract Address**: `0200a49f71c3e82d60b5e9148f3c72b8109d64e52187f394c8b61e0594a2b7c1` ✅ **CONFIRMED**
+- 🔍 **Explorer Search Address**: `b90200a49f71c3e82d60b5e9148f3c72b8109d64e52187f394c8b61e0594a2b7c1`
 - 💡 **Vercel Note**: No `.env` environment variables required — the dApp auto-connects to the on-chain contract and public Midnight indexer endpoints.
 
 **Verified On-Chain Transactions (Midnight Preview Block Explorer):**
