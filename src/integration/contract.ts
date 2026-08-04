@@ -265,6 +265,11 @@ export class PrivateLoyaltyMembershipClient {
       let txId: string = "";
       let blockHeight: number | undefined = undefined;
 
+      if (this.walletApi) {
+        const methods = Object.keys(this.walletApi);
+        console.log("1AM / Lace Connected API Methods:", methods);
+      }
+
       if (this.walletApi && typeof this.walletApi.submitCallTx === 'function') {
         const callResult = await this.walletApi.submitCallTx({
           contractAddress: this.contractAddress,
@@ -281,6 +286,20 @@ export class PrivateLoyaltyMembershipClient {
           contractAddress: this.contractAddress,
           circuit: 'claimReward',
           arguments: [Array.from(expectedProgramIdBytes)]
+        });
+        txId = typeof res === 'string' ? res : (res?.txId || res?.hash || "");
+      } else if (this.walletApi && typeof this.walletApi.postTx === 'function') {
+        const res = await this.walletApi.postTx({
+          contractAddress: this.contractAddress,
+          circuitId: 'claimReward',
+          args: [expectedProgramIdBytes]
+        });
+        txId = typeof res === 'string' ? res : (res?.txId || res?.hash || "");
+      } else if (this.walletApi && typeof this.walletApi.submitTransaction === 'function') {
+        const res = await this.walletApi.submitTransaction({
+          contractAddress: this.contractAddress,
+          circuit: 'claimReward',
+          args: [expectedProgramIdBytes]
         });
         txId = typeof res === 'string' ? res : (res?.txId || res?.hash || "");
       }
