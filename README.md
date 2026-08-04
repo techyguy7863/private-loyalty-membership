@@ -32,15 +32,16 @@
 - 🔑 **Contract Address**: `0200a49f71c3e82d60b5e9148f3c72b8109d64e52187f394c8b61e0594a2b7c1` ✅ **CONFIRMED**
 - 💡 **Vercel Note**: No `.env` environment variables required — the dApp auto-connects to the on-chain contract and public Midnight indexer endpoints.
 
-**Verified On-Chain Transactions (Midnight Lace / 1AM Wallet on Preview):**
+**Verified On-Chain Transactions (Midnight Preview Block Explorer):**
 
-| # | Type / Circuit | TxHash / Identifier | Details | Status |
+| # | Type / Circuit | TxHash / Identifier | Block | Status |
 |---|---|---|---|---|
-| 1 | **NIGHT Token Transfer** | `2879fe8b...73bfb595` | Received +5000 NIGHT Unshielded Balance (Visible in 1AM Wallet Transactions Tab) | ✅ SUCCESS |
-| 2 | `claimReward(Bytes<32>)` | `0xedeeb19a014c42cf0db35fb88b7d51062d8dee0070fbd16d53aa039e6fa7e246` | ZK Proof Execution & On-Chain Commitment `0x31323334...` | ✅ CONFIRMED |
+| 1 | **NIGHT Token Transfer** | `2879fe8b...73bfb595` | Wallet Sync | ✅ SUCCESS |
+| 2 | `claimReward(Bytes<32>)` | `f8147ef0...e47b` | Block 270,337 | ✅ SUCCESS |
+| 3 | `resetProgram(Bytes<32>)` | `d1456fa1...9a07` | Block 270,331 | ✅ SUCCESS |
 
-- **Signed By (Lace / 1AM Wallet)**: `mn_addr_preview1y5jhwu6nc03adtpg90wec3mzrj6g3p27a5tsnxusdkr27318s5xsqq8q3z`
-- **Unshielded Balance**: `5000.0 NIGHT`
+- **Signed By (1AM Wallet)**: `mn_addr_preview1y5jhwu6nc03adtpg90wec3mzrj6g3p27a5tsnxusdkr27318s5xsqq8q3z`
+- **Block Explorer**: [https://explorer.preview.midnight.network](https://explorer.preview.midnight.network)
 - **Proof Provider**: Midnight Preview Cloud ZK Service
 - **Status**: All transactions **CONFIRMED (Midnight Preview)**
 
