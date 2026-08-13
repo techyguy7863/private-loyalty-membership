@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { getClient } from "../../lib/contract";
+import Navbar from "../../components/Navbar";
 import Link from "next/link";
 
 export default function ClaimRewardPage() {
@@ -73,7 +74,10 @@ export default function ClaimRewardPage() {
   };
 
   return (
-    <div style={{ maxWidth: 860, margin: "0 auto", padding: "2rem 1.5rem 4rem" }}>
+    <>
+      <Navbar />
+      <div style={{ maxWidth: 860, margin: "0 auto", padding: "2rem 1.5rem 4rem" }}>
+
       <div style={{ marginBottom: "2rem" }}>
         <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
           <span className="badge badge-purple">ZK Reward Claim</span>
@@ -240,6 +244,9 @@ export default function ClaimRewardPage() {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </>
   );
 }
+
+

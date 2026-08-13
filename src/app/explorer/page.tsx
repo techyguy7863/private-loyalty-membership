@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Navbar from '../../components/Navbar';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -10,7 +11,10 @@ const CONTRACT_ADDRESS = "b90200ad492044f33487a095966ab177dfef9bc957e3d185bae8d2
 
 export default function ExplorerPage() {
   return (
-    <div style={{ maxWidth: 860, margin: "0 auto", padding: "2rem 1.5rem 4rem" }}>
+    <>
+      <Navbar />
+      <div style={{ maxWidth: 860, margin: "0 auto", padding: "2rem 1.5rem 4rem" }}>
+
       <div style={{ marginBottom: "2rem" }}>
         <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem" }}>
           <span className="badge badge-cyan">Midnight Explorer</span>
@@ -56,6 +60,8 @@ export default function ExplorerPage() {
         <Link href="/" className="btn-secondary">Back to Dashboard</Link>
         <Link href="/claim" className="btn-primary">Claim Reward →</Link>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
+
