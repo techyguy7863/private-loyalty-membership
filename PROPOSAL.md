@@ -165,4 +165,4 @@ PLM uses Midnight's **dual-state model**: private witnesses computed on-device v
 - [x] **Next.js 14 App Router UI**: Full dApp with ZK architecture diagrams, point threshold slider, verify/revoke panels.
 - [x] **On-Chain Preview Deployment**: Deployed at [Midnight Explorer](https://preview.midnightexplorer.com/contracts/b90200ad492044f33487a095966ab177dfef9bc957e3d185bae8d2126555006e).
 - [x] **Live Vercel Demo**: [https://private-loyalty-membership.vercel.app/](https://private-loyalty-membership.vercel.app/).
-- [x] **Video Demo**: [YouTube](https://youtu.be/41hDgBExJsY).
+- [x] **Video Demo**: [YouTube](https://youtu.be/yjJzqZvceVY).

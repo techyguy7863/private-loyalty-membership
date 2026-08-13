@@ -3,7 +3,7 @@
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-private--loyalty--membership-181717?style=flat-square&logo=github)](https://github.com/techyguy7863/private-loyalty-membership)
 [![Vercel Deployment](https://img.shields.io/badge/Vercel-private--loyalty--membership.vercel.app-000000?style=flat-square&logo=vercel)](https://private-loyalty-membership.vercel.app/)
-[![YouTube Demo](https://img.shields.io/badge/YouTube-Demo_Video-FF0000?style=flat-square&logo=youtube)](https://youtu.be/41hDgBExJsY)
+[![YouTube Demo](https://img.shields.io/badge/YouTube-Demo_Video-FF0000?style=flat-square&logo=youtube)](https://youtu.be/yjJzqZvceVY)
 [![CI/CD Pipeline](https://github.com/techyguy7863/private-loyalty-membership/actions/workflows/ci.yml/badge.svg)](https://github.com/techyguy7863/private-loyalty-membership/actions/workflows/ci.yml)
 [![Midnight Network](https://img.shields.io/badge/Network-Midnight_Preview-8b5cf6?style=flat-square)](https://explorer.preview.midnight.network)
 [![Compact Language](https://img.shields.io/badge/Compact-v0.23-06b6d4?style=flat-square)](https://midnight.network)
@@ -25,7 +25,7 @@
 - 📄 **Project Proposal**: [PROPOSAL.md](PROPOSAL.md)
 - 📦 **GitHub Repository**: [https://github.com/techyguy7863/private-loyalty-membership](https://github.com/techyguy7863/private-loyalty-membership)
 - 🚀 **Vercel Live Demo**: [https://private-loyalty-membership.vercel.app/](https://private-loyalty-membership.vercel.app/)
-- 🎥 **YouTube Demo Video**: [https://youtu.be/41hDgBExJsY](https://youtu.be/41hDgBExJsY)
+- 🎥 **YouTube Demo Video**: [https://youtu.be/yjJzqZvceVY](https://youtu.be/yjJzqZvceVY)
 - ⚙️ **CI/CD Workflow**: [.github/workflows/ci.yml](.github/workflows/ci.yml)
 - 🌐 **Midnight Explorer**: [https://preview.midnightexplorer.com/contracts/0xb90200ad492044f33487a095966ab177dfef9bc957e3d185bae8d2126555006e](https://preview.midnightexplorer.com/contracts/0xb90200ad492044f33487a095966ab177dfef9bc957e3d185bae8d2126555006e)
 - 📡 **Network**: Midnight Preview Testnet
@@ -257,4 +257,4 @@ npx tsx src/integration/deploy.ts
 - [x] **Browser Proof Generation**: Client-side ZK proof generation and Midnight Lace wallet connector.
 - [x] **On-Chain Midnight Preview Deployment**: [Midnight Explorer](https://preview.midnightexplorer.com/contracts/b90200ad492044f33487a095966ab177dfef9bc957e3d185bae8d2126555006e).
 - [x] **Live Vercel Demo**: [https://private-loyalty-membership.vercel.app/](https://private-loyalty-membership.vercel.app/).
-- [x] **Video Demonstration**: [YouTube Demo](https://youtu.be/41hDgBExJsY).
+- [x] **Video Demonstration**: [YouTube Demo](https://youtu.be/yjJzqZvceVY).

@@ -96,7 +96,7 @@ export default function HomePage() {
                 target="_blank" rel="noopener noreferrer" className="btn-secondary">
                 🔍 Midnight Explorer
               </a>
-              <a href="https://youtu.be/41hDgBExJsY" target="_blank" rel="noopener noreferrer" className="btn-secondary">
+              <a href="https://youtu.be/yjJzqZvceVY" target="_blank" rel="noopener noreferrer" className="btn-secondary">
                 🎥 YouTube Demo
               </a>
               <a href="https://github.com/techyguy7863/private-loyalty-membership" target="_blank" rel="noopener noreferrer" className="btn-secondary">
