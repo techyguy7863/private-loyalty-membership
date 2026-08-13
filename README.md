@@ -48,19 +48,22 @@
 
 ---
 
-## 📸 Platform Screenshots
+## 📸 Platform Screenshots & Verification
 
-### 1. Private Loyalty Membership — Main Application & Dashboard
-![Private Loyalty Membership Main Application](photos/image.png)
+### 1. Private Loyalty Membership — Dashboard & ZK Architecture
+![Private Loyalty Membership Main Application Dashboard](photos/dashboard.png)
 
-### 2. ZK Proof Generation & Real-Time Execution Log
-![ZK Proof Generation & Activity Log](photos/image-1.png)
+### 2. ZK Reward Claiming & Point Threshold Verification
+![ZK Proof Generation & Reward Claiming](photos/claim-reward.png)
 
-### 3. On-Chain Ledger & Admin Panel
-![On-Chain Ledger & Admin Panel](photos/screenshot.png)
+### 3. Midnight On-Chain Explorer & Contract Ledger
+![Midnight On-Chain Explorer & Contract Ledger](photos/contact-explorer.png)
 
-### 4. Mobile Responsive Navbar & Glassmorphic UI
-![Mobile Responsive UI](photos/mobile-ui.png)
+### 4. Vitest Unit Test Suite Execution (10/10 Passing)
+![Vitest Unit Test Suite Execution](photos/test-run.png)
+
+### 5. Responsive Mobile Navigation & Glassmorphic Interface
+![Mobile Responsive UI](photos/ui-mobile.png)
 
 ---
 
