@@ -1,4 +1,7 @@
-import { Contract, ledger, type Ledger, type Witnesses } from '../../managed/contract/index.js';
+// NOTE: This file is legacy (Vite/HTML era). The active Next.js client is at src/lib/contract.ts.
+// The managed contract (managed/contract/index.js) is a CommonJS module and cannot be statically
+// imported in Next.js pages. Tests import it directly from managed/contract/ in Node environment.
+// import { Contract, ledger, type Ledger, type Witnesses } from '../../managed/contract/index.js';
 
 /**
  * ============================================================================

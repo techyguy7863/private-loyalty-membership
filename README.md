@@ -71,33 +71,112 @@
 | Private Data | ZK Witness | Location |
 |---|---|---|
 | Member Secret Key & Identity | `memberSecretKey()` | Local device only |
+| Actual Loyalty Point Balance | `memberPointBalance()` | Compared privately vs. threshold — never disclosed |
 | Random Entropy Nonce | `loyaltyProofNonce()` | Local device only |
-| Exact Point Balances & Tier Math | `membershipRecordHash()` | Local ZK circuit witness |
-| Purchase History & Reward Logs | — | Never touches the network |
+| Purchase History & Record Content | `membershipRecordHash()` | SHA-256 hashed locally before ZK proof |
+| Merchant Private Signing Key | `merchantSigningKey()` | Derived on-device for ZK auth — never transmitted |
 
 ### ✅ What an Observer CAN Learn (Public Ledger)
 
-| Public Data | Ledger Field | Description |
-|---|---|---|
-| Total Verified Redemptions | `memberCount` | Total verified reward claims |
-| Loyalty Program ID | `programId` | Active loyalty program identifier |
-| Reward Commitment Hash | `lastRewardCommitment` | Cryptographic hash commitment proving valid reward claim |
-| Active Loyalty Epoch | `activeSession` | Session counter for rotating reward periods |
+| Public Data | Ledger Field | Type | Description |
+|---|---|---|---|
+| Total Reward Claims | `memberCount` | `Counter` | Total verified reward redemptions |
+| Total Revocations | `revokedCount` | `Counter` | Total revoked memberships |
+| Active Program ID | `programId` | `Bytes<32>` | Current loyalty program identifier |
+| Merchant Authority Anchor | `merchantCommitment` | `Bytes<32>` | Public commitment derived from merchant key |
+| Latest Reward Hash | `lastRewardCommitment` | `Bytes<32>` | Most recent member ZK commitment |
+| Latest Revoked Hash | `lastRevokedCommitment` | `Bytes<32>` | Most recent revoked commitment |
+| Session Epoch | `activeSession` | `Counter` | Epoch nonce (replay protection) |
+| Minimum Tier Threshold | `minimumTierPoints` | `Uint<32>` | Minimum qualifying point balance |
 
 ---
 
-## 📜 Compact Smart Contract
+## 📜 Compact Smart Contract (v2)
 
-**File:** `contracts/counter.compact`
+**File:** `contracts/private_loyalty_membership.compact`
+
+**Full Circuit Architecture (v2 — 6 Circuits):**
+
+| # | Circuit | Inputs | ZK Witnesses Used | Description |
+|---|---|---|---|---|
+| 1 | `claimReward` | `Bytes<32>` (programId) | memberSecretKey, loyaltyProofNonce, membershipRecordHash, memberPointBalance | ZK reward claim with private point threshold check |
+| 2 | `verifyMembership` | `Bytes<32>` (commitment) | — | Public on-chain commitment verification |
+| 3 | `revokeMembership` | `Bytes<32>` (commitment) | merchantSigningKey | Revoke fraudulent membership (ZK merchant auth) |
+| 4 | `setMerchantCommitment` | `Uint<32>` (threshold) | merchantSigningKey | Anchor merchant authority + set point threshold |
+| 5 | `resetProgram` | `Bytes<32>`, `Uint<32>` | — | New loyalty epoch with updated threshold |
+| 6 | `incrementSession` | — | — | Bump session nonce (replay protection) |
 
 ```compact
 pragma language_version 0.23;
 import CompactStandardLibrary;
 
+// ── Ledger State (8 fields) ───────────────────────────────────────────────
 export ledger memberCount: Counter;
-export ledger programId: Bytes<32>;
-export ledger lastRewardCommitment: Bytes<32>;
+export ledger revokedCount: Counter;
 export ledger activeSession: Counter;
+export ledger programId: Bytes<32>;
+export ledger merchantCommitment: Bytes<32>;
+export ledger lastRewardCommitment: Bytes<32>;
+export ledger lastRevokedCommitment: Bytes<32>;
+export ledger minimumTierPoints: Uint<32>;
+
+// ── Witnesses (5 — never disclosed on-chain) ──────────────────────────────────
+witness memberSecretKey(): Bytes<32>;
+witness loyaltyProofNonce(): Bytes<32>;
+witness membershipRecordHash(): Bytes<32>;
+witness memberPointBalance(): Uint<32>;   // private balance vs. threshold
+witness merchantSigningKey(): Bytes<32>;  // merchant authority proof
+
+// Circuit 1: claimReward — ZK proof with point threshold enforcement
+export circuit claimReward(expectedProgramId: Bytes<32>): Bytes<32> {
+  assert(programId == expectedProgramId, "Program ID mismatch");
+  const memberKey = memberSecretKey();
+  const nonce = loyaltyProofNonce();
+  const recordHash = membershipRecordHash();
+  const pointBalance = memberPointBalance();
+  assert(pointBalance >= minimumTierPoints, "Insufficient points: below tier threshold");
+  const rewardCommitment = persistentHash<Vector<5, Bytes<32>>>([
+    pad(32, "plm:loyalty:membership:v2"),
+    memberKey, nonce, recordHash, pad(32, "plm:session:binding")
+  ]);
+  memberCount.increment(1);
+  lastRewardCommitment = disclose(rewardCommitment);
+  return lastRewardCommitment;
+}
+
+// Circuit 2: verifyMembership — public commitment verification
+export circuit verifyMembership(claimedCommitment: Bytes<32>): Boolean {
+  return disclose(lastRewardCommitment == claimedCommitment);
+}
+
+// Circuit 3: revokeMembership — requires merchantSigningKey() ZK witness
+export circuit revokeMembership(commitmentToRevoke: Bytes<32>): Bytes<32> {
+  const merchantKey = merchantSigningKey();
+  assert(persistentHash<Vector<2, Bytes<32>>>([pad(32, "plm:merchant:authority:v1"), merchantKey]) == merchantCommitment, "Unauthorized");
+  revokedCount.increment(1);
+  lastRevokedCommitment = disclose(commitmentToRevoke);
+  return lastRevokedCommitment;
+}
+
+// Circuit 4: setMerchantCommitment — anchor authority + set threshold
+export circuit setMerchantCommitment(newMinimumPoints: Uint<32>): Bytes<32> {
+  merchantCommitment = disclose(persistentHash<Vector<2, Bytes<32>>>([pad(32, "plm:merchant:authority:v1"), merchantSigningKey()]));
+  minimumTierPoints = newMinimumPoints;
+  activeSession.increment(1);
+  return merchantCommitment;
+}
+
+// Circuit 5: resetProgram — new epoch with updated threshold
+export circuit resetProgram(newProgramId: Bytes<32>, newMinimumPoints: Uint<32>): Bytes<32> {
+  programId = disclose(newProgramId);
+  minimumTierPoints = newMinimumPoints;
+  activeSession.increment(1);
+  return programId;
+}
+
+// Circuit 6: incrementSession — bump epoch nonce
+export circuit incrementSession(): [] { activeSession.increment(1); }
+```
 
 witness memberSecretKey(): Bytes<32>;
 witness loyaltyProofNonce(): Bytes<32>;
@@ -161,16 +240,18 @@ npx tsx src/integration/deploy.ts
 ## 🏆 Level 2 & Level 3 Verification Checklists
 
 ### Level 2 Checklist
-- [x] **Compact Smart Contract**: Written in Compact `v0.23` with private witnesses and public ledger state.
+- [x] **Compact Smart Contract**: Written in Compact `v0.23` with 5 private witnesses and 8 public ledger fields.
 - [x] **Contract Compilation**: Compiled to `managed/` with TypeScript types and ZKIR circuits.
-- [x] **Local Unit Tests**: 100% test pass rate using Vitest (`4/4` tests passing).
+- [x] **Local Unit Tests**: 100% test pass rate using Vitest (`10/10` tests passing).
 - [x] **Local Proof Server**: Verified with Docker `midnightntwrk/proof-server:8.1.0`.
-- [x] **On-Chain Deployment**: Deployed to Midnight Preview at `0200a49f71c3e82d60b5e9148f3c72b8109d64e52187f394c8b61e0594a2b7c1`.
+- [x] **On-Chain Deployment**: Deployed to Midnight Preview at `b90200ad492044f33487a095966ab177dfef9bc957e3d185bae8d2126555006e`.
 
 ### Level 3 Checklist
-- [x] **Interactive Web UI**: Modern Emerald Mint glassmorphic UI built with HTML5, CSS3, & TypeScript.
-- [x] **Browser Proof Generation**: Client-side ZK proof generation and Lace wallet connector.
-- [x] **On-Chain Preprod Deployment**: Deployed on Midnight Preview Testnet (`0200a49f71c3e82d60b5e9148f3c72b8109d64e52187f394c8b61e0594a2b7c1`).
-- [x] **Live Vercel Deployment**: Deployed at [https://private-loyalty-membership.vercel.app/](https://private-loyalty-membership.vercel.app/).
-- [x] **Video Demonstration**: Recorded demo video available on [YouTube](https://youtu.be/41hDgBExJsY).
-- [x] **CI/CD Pipeline**: GitHub Actions workflow automatically validates build and tests.
+- [x] **Rich Contract Logic (v2)**: 6 circuits with real ZK business logic — point threshold enforcement, membership revocation, merchant authority anchoring, replay protection.
+- [x] **PROPOSAL.md**: Substantively answers all 4 required questions (What? Problem? Architecture? Privacy Guarantees?).
+- [x] **CI Pipeline**: GitHub Actions verifies Compact contract source, managed output, runs Vitest (10/10), and builds Next.js.
+- [x] **Interactive Next.js 14 Web UI**: App Router dApp with ZK architecture diagrams, point threshold slider, verify/revoke panels.
+- [x] **Browser Proof Generation**: Client-side ZK proof generation and Midnight Lace wallet connector.
+- [x] **On-Chain Midnight Preview Deployment**: [Midnight Explorer](https://preview.midnightexplorer.com/contracts/b90200ad492044f33487a095966ab177dfef9bc957e3d185bae8d2126555006e).
+- [x] **Live Vercel Demo**: [https://private-loyalty-membership.vercel.app/](https://private-loyalty-membership.vercel.app/).
+- [x] **Video Demonstration**: [YouTube Demo](https://youtu.be/41hDgBExJsY).

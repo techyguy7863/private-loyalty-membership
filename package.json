@@ -1,18 +1,15 @@
 {
   "name": "private-loyalty-membership",
-  "version": "1.0.0",
-  "description": "Private Loyalty Membership (PLM) — Privacy-preserving zero-knowledge loyalty tier verification & member proof dApp built on Midnight Network using Compact smart contracts.",
-  "type": "module",
-  "main": "src/index.ts",
+  "version": "2.0.0",
+  "description": "Private Loyalty Membership (PLM) — ZK loyalty tier verification dApp on Midnight Network. Next.js 14 App Router.",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "compile": "compact compile contracts/counter.compact managed",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "compile": "compact compile contracts/private_loyalty_membership.compact managed",
     "test": "vitest run",
-    "build": "tsc --noEmit && vite build",
-    "deploy": "node --loader ts-node/esm src/integration/deploy.ts",
-    "deploy:preview": "npx tsx src/integration/deploy-preview.ts",
-    "deploy:seed": "npx tsx src/integration/deploy-seed.ts",
-    "deploy:live": "npx tsx src/integration/deploy-live.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@midnight-ntwrk/compact-runtime": "0.16.0",
@@ -29,15 +26,16 @@
     "@midnight-ntwrk/midnight-js-utils": "4.1.1",
     "@midnight-ntwrk/wallet": "^5.0.0",
     "@midnight-ntwrk/wallet-api": "^5.0.0",
-    "@midnight-ntwrk/wallet-sdk": "^1.1.0"
+    "@midnight-ntwrk/wallet-sdk": "^1.1.0",
+    "next": "14.2.35",
+    "react": "^18",
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "ts-node": "^10.9.2",
-    "tsx": "^4.19.2",
-    "typescript": "^5.9.3",
-    "vite": "^5.4.11",
-    "vite-plugin-top-level-await": "^1.6.0",
-    "vite-plugin-wasm": "^3.5.0",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5",
     "vitest": "^3.0.5"
   }
 }

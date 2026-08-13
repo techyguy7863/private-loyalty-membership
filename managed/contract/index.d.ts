@@ -4,21 +4,37 @@ export type Witnesses<PS> = {
   memberSecretKey(context: __compactRuntime.WitnessContext<Ledger, PS>): [PS, Uint8Array];
   loyaltyProofNonce(context: __compactRuntime.WitnessContext<Ledger, PS>): [PS, Uint8Array];
   membershipRecordHash(context: __compactRuntime.WitnessContext<Ledger, PS>): [PS, Uint8Array];
+  memberPointBalance(context: __compactRuntime.WitnessContext<Ledger, PS>): [PS, bigint];
+  merchantSigningKey(context: __compactRuntime.WitnessContext<Ledger, PS>): [PS, Uint8Array];
 }
 
 export type ImpureCircuits<PS> = {
   claimReward(context: __compactRuntime.CircuitContext<PS>,
               expectedProgramId_0: Uint8Array): __compactRuntime.CircuitResults<PS, Uint8Array>;
+  verifyMembership(context: __compactRuntime.CircuitContext<PS>,
+                   claimedCommitment_0: Uint8Array): __compactRuntime.CircuitResults<PS, boolean>;
+  revokeMembership(context: __compactRuntime.CircuitContext<PS>,
+                   commitmentToRevoke_0: Uint8Array): __compactRuntime.CircuitResults<PS, Uint8Array>;
+  setMerchantCommitment(context: __compactRuntime.CircuitContext<PS>,
+                        newMinimumPoints_0: bigint): __compactRuntime.CircuitResults<PS, Uint8Array>;
   resetProgram(context: __compactRuntime.CircuitContext<PS>,
-               newProgramId_0: Uint8Array): __compactRuntime.CircuitResults<PS, Uint8Array>;
+               newProgramId_0: Uint8Array,
+               newMinimumPoints_0: bigint): __compactRuntime.CircuitResults<PS, Uint8Array>;
   incrementSession(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
 }
 
 export type ProvableCircuits<PS> = {
   claimReward(context: __compactRuntime.CircuitContext<PS>,
               expectedProgramId_0: Uint8Array): __compactRuntime.CircuitResults<PS, Uint8Array>;
+  verifyMembership(context: __compactRuntime.CircuitContext<PS>,
+                   claimedCommitment_0: Uint8Array): __compactRuntime.CircuitResults<PS, boolean>;
+  revokeMembership(context: __compactRuntime.CircuitContext<PS>,
+                   commitmentToRevoke_0: Uint8Array): __compactRuntime.CircuitResults<PS, Uint8Array>;
+  setMerchantCommitment(context: __compactRuntime.CircuitContext<PS>,
+                        newMinimumPoints_0: bigint): __compactRuntime.CircuitResults<PS, Uint8Array>;
   resetProgram(context: __compactRuntime.CircuitContext<PS>,
-               newProgramId_0: Uint8Array): __compactRuntime.CircuitResults<PS, Uint8Array>;
+               newProgramId_0: Uint8Array,
+               newMinimumPoints_0: bigint): __compactRuntime.CircuitResults<PS, Uint8Array>;
   incrementSession(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
 }
 
@@ -28,16 +44,27 @@ export type PureCircuits = {
 export type Circuits<PS> = {
   claimReward(context: __compactRuntime.CircuitContext<PS>,
               expectedProgramId_0: Uint8Array): __compactRuntime.CircuitResults<PS, Uint8Array>;
+  verifyMembership(context: __compactRuntime.CircuitContext<PS>,
+                   claimedCommitment_0: Uint8Array): __compactRuntime.CircuitResults<PS, boolean>;
+  revokeMembership(context: __compactRuntime.CircuitContext<PS>,
+                   commitmentToRevoke_0: Uint8Array): __compactRuntime.CircuitResults<PS, Uint8Array>;
+  setMerchantCommitment(context: __compactRuntime.CircuitContext<PS>,
+                        newMinimumPoints_0: bigint): __compactRuntime.CircuitResults<PS, Uint8Array>;
   resetProgram(context: __compactRuntime.CircuitContext<PS>,
-               newProgramId_0: Uint8Array): __compactRuntime.CircuitResults<PS, Uint8Array>;
+               newProgramId_0: Uint8Array,
+               newMinimumPoints_0: bigint): __compactRuntime.CircuitResults<PS, Uint8Array>;
   incrementSession(context: __compactRuntime.CircuitContext<PS>): __compactRuntime.CircuitResults<PS, []>;
 }
 
 export type Ledger = {
   readonly memberCount: bigint;
-  readonly programId: Uint8Array;
-  readonly lastRewardCommitment: Uint8Array;
+  readonly revokedCount: bigint;
   readonly activeSession: bigint;
+  readonly programId: Uint8Array;
+  readonly merchantCommitment: Uint8Array;
+  readonly lastRewardCommitment: Uint8Array;
+  readonly lastRevokedCommitment: Uint8Array;
+  readonly minimumTierPoints: bigint;
 }
 
 export type ContractReferenceLocations = any;

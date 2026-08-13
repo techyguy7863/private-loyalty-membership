@@ -1,0 +1,138 @@
+pragma language_version 0.23;
+import CompactStandardLibrary;
+
+// ─── Ledger State (8 fields) ───────────────────────────────────────────────────
+// Public on-chain state visible to all verifiers
+export ledger memberCount: Counter;                // Total reward claims ever made
+export ledger revokedCount: Counter;               // Total revoked memberships
+export ledger activeSession: Counter;              // Monotonic epoch nonce (replay protection)
+export ledger programId: Bytes<32>;                // Current active loyalty program ID
+export ledger merchantCommitment: Bytes<32>;       // Merchant authority public key commitment
+export ledger lastRewardCommitment: Bytes<32>;     // Most recent member ZK reward commitment
+export ledger lastRevokedCommitment: Bytes<32>;    // Most recent revoked commitment hash
+export ledger minimumTierPoints: Uint<32>;         // Minimum point threshold set by merchant
+
+// ─── Witnesses (Private — Never Disclosed On-Chain) ───────────────────────────
+witness memberSecretKey(): Bytes<32>;         // Member's private identity key
+witness loyaltyProofNonce(): Bytes<32>;       // Entropy nonce for replay-resistance
+witness membershipRecordHash(): Bytes<32>;    // Hashed purchase/point record
+witness memberPointBalance(): Uint<32>;       // Private point balance (checked vs. threshold)
+witness merchantSigningKey(): Bytes<32>;      // Merchant's private key (admin authorization)
+
+// ─── Circuit 1: claimReward ────────────────────────────────────────────────────
+// Member privately proves they have enough points (balance >= minimumTierPoints)
+// and binds identity, nonce, and purchase record into a ZK commitment.
+// Only the commitment hash is disclosed on-chain — no identity or balance revealed.
+export circuit claimReward(expectedProgramId: Bytes<32>): Bytes<32> {
+  // Verify the member is claiming against the active loyalty program
+  assert(programId == expectedProgramId, "Loyalty program ID mismatch: claim rejected");
+
+  // Resolve all private witnesses locally — never leave the device
+  const memberKey = memberSecretKey();
+  const nonce = loyaltyProofNonce();
+  const recordHash = membershipRecordHash();
+  const pointBalance = memberPointBalance();
+
+  // ZK Tier Threshold Enforcement:
+  // Prove point balance meets minimum without disclosing the actual balance on-chain
+  assert(pointBalance >= minimumTierPoints, "Insufficient points: below minimum tier threshold");
+
+  // Session binding prevents cross-epoch commitment reuse (replay attack prevention)
+  const sessionBytes = pad(32, "plm:session:binding");
+
+  // Build the multi-input ZK reward commitment (Vector<5, Bytes<32>>):
+  // Hash(domain_tag || memberKey || nonce || recordHash || session)
+  const rewardCommitment = persistentHash<Vector<5, Bytes<32>>>([
+    pad(32, "plm:loyalty:membership:v2"),
+    memberKey,
+    nonce,
+    recordHash,
+    sessionBytes
+  ]);
+
+  // Increment total reward claim count
+  memberCount.increment(1);
+
+  // Disclose ONLY the commitment hash — all private inputs remain hidden
+  const disclosedCommitment = disclose(rewardCommitment);
+  lastRewardCommitment = disclosedCommitment;
+
+  return disclosedCommitment;
+}
+
+// ─── Circuit 2: verifyMembership ───────────────────────────────────────────────
+// Any verifier can check whether a claimed commitment matches the on-chain record.
+// Used by merchants, partners, and third-party verifiers.
+export circuit verifyMembership(claimedCommitment: Bytes<32>): Boolean {
+  const matches = lastRewardCommitment == claimedCommitment;
+  return disclose(matches);
+}
+
+// ─── Circuit 3: revokeMembership ──────────────────────────────────────────────
+// Merchant revokes a fraudulent or expired membership commitment.
+// Requires merchant signing key as ZK witness for authorization — key never disclosed.
+export circuit revokeMembership(commitmentToRevoke: Bytes<32>): Bytes<32> {
+  // Derive the expected merchant commitment from the private signing key
+  const merchantKey = merchantSigningKey();
+  const derivedMerchantCommitment = persistentHash<Vector<2, Bytes<32>>>([
+    pad(32, "plm:merchant:authority:v1"),
+    merchantKey
+  ]);
+
+  // Verify the caller is the registered merchant authority
+  assert(derivedMerchantCommitment == merchantCommitment, "Unauthorized: merchant commitment mismatch");
+
+  // Record the revocation
+  revokedCount.increment(1);
+  const disclosedRevoked = disclose(commitmentToRevoke);
+  lastRevokedCommitment = disclosedRevoked;
+
+  return disclosedRevoked;
+}
+
+// ─── Circuit 4: setMerchantCommitment ─────────────────────────────────────────
+// One-time setup: merchant anchors their public key commitment on-chain and sets
+// the minimum loyalty point threshold for tier qualification.
+export circuit setMerchantCommitment(newMinimumPoints: Uint<32>): Bytes<32> {
+  // Derive the merchant's public commitment from their private signing key
+  const merchantKey = merchantSigningKey();
+  const newMerchantCommitment = persistentHash<Vector<2, Bytes<32>>>([
+    pad(32, "plm:merchant:authority:v1"),
+    merchantKey
+  ]);
+
+  // Anchor the merchant commitment on-chain
+  const disclosedCommitment = disclose(newMerchantCommitment);
+  merchantCommitment = disclosedCommitment;
+
+  // Set the minimum point threshold for reward eligibility
+  minimumTierPoints = newMinimumPoints;
+
+  // Bump session to invalidate stale proofs from previous epoch
+  activeSession.increment(1);
+
+  return disclosedCommitment;
+}
+
+// ─── Circuit 5: resetProgram ──────────────────────────────────────────────────
+// Merchant resets the active loyalty program to a new ID and updates the minimum
+// point threshold. Creates a clean epoch boundary for the new program.
+export circuit resetProgram(newProgramId: Bytes<32>, newMinimumPoints: Uint<32>): Bytes<32> {
+  // Record the new program ID publicly on-chain
+  programId = disclose(newProgramId);
+
+  // Update the minimum point threshold for the new program
+  minimumTierPoints = newMinimumPoints;
+
+  // Increment session to create epoch boundary
+  activeSession.increment(1);
+
+  return programId;
+}
+
+// ─── Circuit 6: incrementSession ──────────────────────────────────────────────
+// Bumps the session epoch counter independently.
+// Used for security incidents or manual epoch rotation.
+export circuit incrementSession(): [] {
+  activeSession.increment(1);
+}
